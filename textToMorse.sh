@@ -59,9 +59,9 @@ firstTime=1;
 
 while [[ true ]]; do
     if [ $@ != "" ] && [ $firstTime == 1 ]; then # If text given as argument
-        askResponse=$@;
+        askResponse=$@; # Arguments are the text
     else
-        ask "Enter the text [english alphabet only]";
+        ask "Enter the text [english alphabet only]"; # Ask for the text
     fi
     
     for (( i = 0; i < ${#askResponse}; i++ )); do
@@ -70,12 +70,12 @@ while [[ true ]]; do
             #because of space between words is | (7 spaces), do not add extra spaces in the sides
             msg+="${conversor[${askResponse:$i:1}]}";
         else
-            msg+=" ${conversor[${askResponse:$i:1}]}";#3 spaces = space between characters
+            msg+=" ${conversor[${askResponse:$i:1}]}"; #3 spaces = space between characters
         fi
     done
 
     firstTime=0;
 
-    printf "The morse code is: \"${msg:1:((${#msg} - 1))}\"\n(${LGREEN}Copied to the clipboard${NC})\n\n";
+    printf "The morse code is:$msg\n(${LGREEN}Copied to the clipboard${NC})\n\n";
     printf "${msg:1:((${#msg} - 1))}" | xclip -i -selection clipboard;
 done
