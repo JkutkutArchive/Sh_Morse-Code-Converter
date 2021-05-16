@@ -57,11 +57,14 @@ ask(){ # to do the read in terminal, save the response in askResponse
 
 firstTime=1;
 
-while [[ true ]]; do
-    if [ $@ != "" ] && [ $firstTime == 1 ]; then # If text given as argument
+while [ 1 ]; do
+    if [[ $@ == "" ]] || [[ $firstTime == 0 ]]; then 
+        ask "Enter the text [english alphabet only] [*, exit]"; # Ask for the text
+        if [ "$askResponse" == "exit" ]; then
+            break;
+        fi
+    else # If text given as argument
         askResponse=$@; # Arguments are the text
-    else
-        ask "Enter the text [english alphabet only]"; # Ask for the text
     fi
     
     for (( i = 0; i < ${#askResponse}; i++ )); do
