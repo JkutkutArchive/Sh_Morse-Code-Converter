@@ -55,8 +55,15 @@ ask(){ # to do the read in terminal, save the response in askResponse
     read -p "$(echo -e ${LBLUE}"$text"${NC} $textEnd)->" askResponse;
 }
 
+firstTime=1;
+
 while [[ true ]]; do
-    ask "Enter the text [english alphabet only]";
+    if [ $@ != "" ] && [ $firstTime == 1 ]; then # If text given as argument
+        askResponse=$@;
+    else
+        ask "Enter the text [english alphabet only]";
+    fi
+    
     for (( i = 0; i < ${#askResponse}; i++ )); do
         echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
         if [[ ${askResponse:$i:1} = " " ]] || [[ ${msg:(( ${#msg} - 1 )):1} = "|" ]]; then
@@ -66,6 +73,9 @@ while [[ true ]]; do
             msg+=" ${conversor[${askResponse:$i:1}]}";#3 spaces = space between characters
         fi
     done
-    printf "the morse code is: \"${msg:1:((${#msg} - 1))}\"\n";
+
+    firstTime=0;
+
+    printf "The morse code is: \"${msg:1:((${#msg} - 1))}\"\n(${LGREEN}Copied to the clipboard${NC})\n\n";
     printf "${msg:1:((${#msg} - 1))}" | xclip -i -selection clipboard;
 done
