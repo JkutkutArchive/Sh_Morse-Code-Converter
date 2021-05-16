@@ -1,12 +1,12 @@
 #!/bin/bash
 #colors:
-  NC='\033[0m'; # No Color
-  RED='\033[0;31m';
-  GREEN='\033[0;32m';
-  LRED='\033[1;31m';
-  LGREEN='\033[1;32m';
-  YELLOW='\033[1;33m';
-  LBLUE='\033[1;34m';
+NC='\033[0m'; # No Color
+RED='\033[0;31m';
+GREEN='\033[0;32m';
+LRED='\033[1;31m';
+LGREEN='\033[1;32m';
+YELLOW='\033[1;33m';
+LBLUE='\033[1;34m';
 
 declare -A conversor;
 conversor[a]=".-";
@@ -49,23 +49,23 @@ conversor[ ]="      ";
 
 
 ask(){ # to do the read in terminal, save the response in askResponse
-  text=$1;
-  textEnd=$2;
-  msg="";
-  read -p "$(echo -e ${LBLUE}"$text"${NC} $textEnd)->" askResponse;
+    text=$1;
+    textEnd=$2;
+    msg="";
+    read -p "$(echo -e ${LBLUE}"$text"${NC} $textEnd)->" askResponse;
 }
 
 while [[ true ]]; do
-  ask "Enter the text [english alphabet only]";
-  for (( i = 0; i < ${#askResponse}; i++ )); do
-    echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
-    if [[ ${askResponse:$i:1} = " " ]] || [[ ${msg:(( ${#msg} - 1 )):1} = "|" ]]; then
-      #because of space between words is | (7 spaces), do not add extra spaces in the sides
-      msg+="${conversor[${askResponse:$i:1}]}";
-    else
-      msg+=" ${conversor[${askResponse:$i:1}]}";#3 spaces = space between characters
-    fi
-  done
-  printf "the morse code is: \"${msg:1:((${#msg} - 1))}\"\n";
-  printf "${msg:1:((${#msg} - 1))}" | xclip -i -selection clipboard;
+    ask "Enter the text [english alphabet only]";
+    for (( i = 0; i < ${#askResponse}; i++ )); do
+        echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
+        if [[ ${askResponse:$i:1} = " " ]] || [[ ${msg:(( ${#msg} - 1 )):1} = "|" ]]; then
+            #because of space between words is | (7 spaces), do not add extra spaces in the sides
+            msg+="${conversor[${askResponse:$i:1}]}";
+        else
+            msg+=" ${conversor[${askResponse:$i:1}]}";#3 spaces = space between characters
+        fi
+    done
+    printf "the morse code is: \"${msg:1:((${#msg} - 1))}\"\n";
+    printf "${msg:1:((${#msg} - 1))}" | xclip -i -selection clipboard;
 done
