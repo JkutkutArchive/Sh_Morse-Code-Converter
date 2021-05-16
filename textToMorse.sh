@@ -48,7 +48,7 @@ conversor[9]="----.";
 conversor[ ]="      ";
 
 
-ask(){ # to do the read in terminal, save the response in askResponse
+ask(){ # Ask the argument on terminal, save the response in askResponse
     text=$1;
     textEnd=$2;
     msg="";
@@ -70,10 +70,10 @@ while [ 1 ]; do
     for (( i = 0; i < ${#askResponse}; i++ )); do
         echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
         if [[ ${askResponse:$i:1} = " " ]] || [[ ${msg:(( ${#msg} - 1 )):1} = "|" ]]; then
-            #because of space between words is | (7 spaces), do not add extra spaces in the sides
+            # Because of space between words is | (7 spaces), do not add extra spaces in the sides
             msg+="${conversor[${askResponse:$i:1}]}";
         else
-            msg+=" ${conversor[${askResponse:$i:1}]}"; #3 spaces = space between characters
+            msg+=" ${conversor[${askResponse:$i:1}]}"; # 3 spaces = space between characters
         fi
     done
 
