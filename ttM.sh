@@ -5,7 +5,7 @@ NC='\033[0m'; # No Color
 RED='\033[0;31m';
 
 declare -A conversor;
-if [[ $1 == "-r" ]]; then
+if [[ $1 == "-r" ]]; then # if real morse selected
     correctMode=2;
     spacer="   ";
     conversor[a]=". -";
@@ -45,7 +45,7 @@ if [[ $1 == "-r" ]]; then
     conversor[8]="- - - . .";
     conversor[9]="- - - - .";
     conversor[ ]=" ";
-else
+else # If reduced morse selected (DEFAULT)
     correctMode=1;
     spacer=" ";
     conversor[a]=".-";
@@ -91,30 +91,26 @@ fi
 
 if [[ ${@:$correctMode} != "" ]]; then
     posibleFileFlagIndex=$((correctMode + 1));
-    if [[ ${!posibleFileFlagIndex} == "-f" ]]; then
-        textToConvert=$(cat ${!$(($correctMode + 2))});
-        echo "file";
+    if [[ ${!posibleFileFlagIndex} == "-f" ]]; then # if -f flag found
+        textToConvert=$(cat ${!$(($correctMode + 2))}); # The text to convert is the content of the file
     else
-        textToConvert=${@:$correctMode}; # Arguments are the text
-        echo "arguments";
+        textToConvert=${@:$correctMode}; # Arguments are the arguments
     fi
-else
-    textToConvert=$(cat);
-    echo "pipe"
+else # If no arguments with the text
+    textToConvert=$(cat); # Try by getting the text from the pipe
 fi
-
-echo $textToConvert;
+# If here, the inputed text is stored on textToConvert
 
 reEx='^[a-z 0-9]*$';
 
-if [[ ! "$textToConvert" =~ $reEx ]]; then
+if [[ ! "$textToConvert" =~ $reEx ]]; then # If text not valid
     printf "${RED}Invalid input.\nIt must be a combination of english characters with numbers and spaces.${NC}\n";
     exit 1;
 fi
 
-for (( i = 0; i < ${#textToConvert}; i++ )); do
-    msg+="$spacer${conversor[${textToConvert:$i:1}]}"; # 3 spaces = space between characters 
+for (( i = 0; i < ${#textToConvert}; i++ )); do # For each character
+    msg+="$spacer${conversor[${textToConvert:$i:1}]}"; # Convert it to morse
 done
-msg="${msg:${#spacer}:((${#msg} - 1))}";
-echo "$msg";
-printf "$msg" | xclip -i -selection clipboard;
+msg="${msg:${#spacer}:((${#msg} - 1))}"; # Remove first space(s)
+echo "$msg"; # Return msg
+printf "$msg" | xclip -i -selection clipboard; # Copy the msg to the clipboard
