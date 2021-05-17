@@ -52,7 +52,9 @@ if [[ $@ != "" ]]; then
     fi
 fi
 
-if [[ "$textToConvert" =~ ^[a-z0-9]*$ ]]; then
+reEx='^[a-z 0-9]*$';
+
+if [[ "$textToConvert" =~ $reEx ]]; then
     echo "valid input";
 else
     printf "${RED}Invalid input.\nIt must be a combination of english characters with numbers and spaces.${NC}\n";
