@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#colors:
+NC='\033[0m'; # No Color
+RED='\033[0;31m';
+
 declare -A conversor;
 conversor[a]=".-";
 conversor[b]="-...";
@@ -41,7 +45,18 @@ conversor[ ]="      ";
 
 
 if [[ $@ != "" ]]; then
-    textToConvert=$@; # Arguments are the text
+    if [[ $1 == "-f" ]]; then
+        textToConvert=$(cat $2);
+    else
+        textToConvert=$@; # Arguments are the text
+    fi
+fi
+
+if [[ "$textToConvert" =~ ^[a-z0-9]*$ ]]; then
+    echo "valid input";
+else
+    printf "${RED}Invalid input.\nIt must be a combination of english characters with numbers and spaces.${NC}\n";
+    exit 1;
 fi
 
 for (( i = 0; i < ${#textToConvert}; i++ )); do
@@ -50,7 +65,7 @@ for (( i = 0; i < ${#textToConvert}; i++ )); do
         msg+="${conversor[${textToConvert:$i:1}]}";
     else
         msg+=" ${conversor[${textToConvert:$i:1}]}"; # 3 spaces = space between characters
-    fi
+    fi 
 done
 msg="${msg:1:((${#msg} - 1))}";
 echo "$msg";
