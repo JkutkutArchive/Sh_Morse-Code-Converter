@@ -41,7 +41,7 @@ conversor[6]="-....";
 conversor[7]="--...";
 conversor[8]="---..";
 conversor[9]="----.";
-conversor[ ]="      ";
+conversor[ ]="   ";
 
 
 if [[ $@ != "" ]]; then
