@@ -47,6 +47,8 @@ conversor[8]="---..";
 conversor[9]="----.";
 conversor[ ]="      ";
 
+reEx='^[a-z 0-9]*$';
+firstTime=1;
 
 ask(){ # Ask the argument on terminal, save the response in askResponse
     text=$1;
@@ -55,7 +57,6 @@ ask(){ # Ask the argument on terminal, save the response in askResponse
     read -p "$(echo -e ${LBLUE}"$text"${NC} $textEnd)->" askResponse;
 }
 
-firstTime=1;
 
 while [ 1 ]; do
     if [[ $@ == "" ]] || [[ $firstTime == 0 ]]; then 
@@ -66,6 +67,12 @@ while [ 1 ]; do
     else # If text given as argument
         askResponse=$@; # Arguments are the text
     fi
+
+    if [[ ! "$askResponse" =~ $reEx ]]; then
+        printf "${RED}Invalid input\n${NC}";
+        continue;
+    fi
+
     
     for (( i = 0; i < ${#askResponse}; i++ )); do
         echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
