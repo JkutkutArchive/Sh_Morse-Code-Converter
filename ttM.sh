@@ -62,12 +62,7 @@ if [[ ! "$textToConvert" =~ $reEx ]]; then
 fi
 
 for (( i = 0; i < ${#textToConvert}; i++ )); do
-    if [[ ${textToConvert:$i:1} = " " ]] || [[ ${msg:(( ${#msg} - 1 )):1} = "|" ]]; then
-        # Because of space between words is | (7 spaces), do not add extra spaces in the sides
-        msg+="${conversor[${textToConvert:$i:1}]}";
-    else
-        msg+=" ${conversor[${textToConvert:$i:1}]}"; # 3 spaces = space between characters
-    fi 
+    msg+=" ${conversor[${textToConvert:$i:1}]}"; # 3 spaces = space between characters 
 done
 msg="${msg:1:((${#msg} - 1))}";
 echo "$msg";
