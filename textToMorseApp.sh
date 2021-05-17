@@ -58,7 +58,14 @@ ask(){ # Ask the argument on terminal, save the response in askResponse
 firstTime=1;
 
 while [ 1 ]; do
-    .... --- .-.. .-
+    if [[ $@ == "" ]] || [[ $firstTime == 0 ]]; then 
+        ask "Enter the text [english alphabet only] [*, exit]"; # Ask for the text
+        if [ "$askResponse" == "exit" ]; then
+            break;
+        fi
+    else # If text given as argument
+        askResponse=$@; # Arguments are the text
+    fi
     
     for (( i = 0; i < ${#askResponse}; i++ )); do
         echo -e "\""${LGREEN}"${askResponse:$i:1}"${NC}"\" is \"${conversor[${askResponse:$i:1}]}\"";
