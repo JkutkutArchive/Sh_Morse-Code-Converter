@@ -50,13 +50,13 @@ if [[ $@ != "" ]]; then
     else
         textToConvert=$@; # Arguments are the text
     fi
+else
+    textToConvert=$(cat);
 fi
 
 reEx='^[a-z 0-9]*$';
 
-if [[ "$textToConvert" =~ $reEx ]]; then
-    echo "valid input";
-else
+if [[ ! "$textToConvert" =~ $reEx ]]; then
     printf "${RED}Invalid input.\nIt must be a combination of english characters with numbers and spaces.${NC}\n";
     exit 1;
 fi
