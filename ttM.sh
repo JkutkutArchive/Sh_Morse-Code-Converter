@@ -6,7 +6,7 @@ RED='\033[0;31m';
 
 declare -A conversor;
 if [[ $1 == "-r" ]]; then
-    correctMode=1;
+    correctMode=2;
     spacer="   ";
     conversor[a]=". -";
     conversor[b]="- . . .";
@@ -46,7 +46,7 @@ if [[ $1 == "-r" ]]; then
     conversor[9]="- - - - .";
     conversor[ ]=" ";
 else
-    correctMode=0;
+    correctMode=1;
     spacer=" ";
     conversor[a]=".-";
     conversor[b]="-...";
@@ -87,27 +87,23 @@ else
     conversor[ ]=" ";
 fi
 
-if [[ $correctMode == 1 ]]; then
-    if [[ ${@:2} != "" ]]; then
-        if [[ $2 == "-f" ]]; then
-            textToConvert=$(cat $3);
-        else
-            textToConvert=${@:2}; # Arguments are the text
-        fi
+
+
+if [[ ${@:$correctMode} != "" ]]; then
+    posibleFileFlagIndex=$((correctMode + 1));
+    if [[ ${!posibleFileFlagIndex} == "-f" ]]; then
+        textToConvert=$(cat ${!$(($correctMode + 2))});
+        echo "file";
     else
-        textToConvert=$(cat);
+        textToConvert=${@:$correctMode}; # Arguments are the text
+        echo "arguments";
     fi
 else
-    if [[ $@ != "" ]]; then
-        if [[ $1 == "-f" ]]; then
-            textToConvert=$(cat $2);
-        else
-            textToConvert=$@; # Arguments are the text
-        fi
-    else
-        textToConvert=$(cat);
-    fi
+    textToConvert=$(cat);
+    echo "pipe"
 fi
+
+echo $textToConvert;
 
 reEx='^[a-z 0-9]*$';
 
