@@ -1,24 +1,33 @@
+tests=(
+    "abcdefghijklmnopkrstuvwxyz 0123456789"
+    "-r hola"
+);
+
+results=(
+    '.- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. -.- .-. ... - ..- ...- .-- -..- -.-- --..   ----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----.'
+    "hola"
+);
+
+
 echo "Starting test";
 
-echo "Testing: $test1";
 
-test1="abcdefghijklmnopkrstuvwxyz 0123456789";
-# spectedResult='.- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. -.- .-. ... - ..- ...- .-- -..- -.-- --..   ----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----.';
-spectedResult="hfdjs"
+i=0;
+while [[ $i < ${#tests[@]} ]]; do
+    # echo ${i};
+    # echo "${tests[$i]}";
+    # echo ${#tests[@]};
+    printf "Testing $i:\n    ./ttM.sh ${tests[$i]}\n";
 
-# Get current directory
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)";
+    ( . ./ttM.sh ${tests[$i]}) > outputTemp.txt;
 
+    if [ ! "$(cat outputTemp.txt)" == "${results[$i]}" ]; then
+        echo "Does not match test1";
+    fi
 
-( . ./ttM.sh $test1;) > outputTemp.txt;
+    i=$((i+1));
+done
 
-echo $(cat outputTemp.txt);
-echo $spectedResult
-
-
-if [ ! "$(cat outputTemp.txt)" == "$spectedResult" ]; then
-    echo "Does not match test1";
-fi
 
 
 echo "End of testing";
