@@ -27,17 +27,19 @@ echo "Starting test";
 
 i=0;
 while [[ $i < ${#tests[@]} ]]; do
-    printf "Testing $i:\n    ./ttM.sh ${tests[$i]}\n";
+    printf "Testing $i:\n    ./ttM.sh ${tests[$i]}\n\t";
 
     ( . ./ttM.sh ${tests[$i]}) > outputTemp.txt;
 
     if [ ! "$(cat outputTemp.txt)" == "${results[$i]}" ]; then
-        echo "Does not match test1";
+        printf "${RED}Error on test $i${NC}\n";
+    else
+        printf "${GREEN}Done${NC}\n";
     fi
 
     i=$((i+1));
 done
 
 
-
-echo "End of testing";
+rm outputTemp.txt;
+printf "${GREEN}End of testing${NC}\n";
