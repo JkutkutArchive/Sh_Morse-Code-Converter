@@ -1,14 +1,14 @@
 # Sh_Morse-Code-Converter
 Este repositorio aloja varios scripts que permiten convertir texto a código morse.
 
-## Content:
+## Contenido:
 
 ### · Script [textToMorseApp.sh](./textToMorseApp.sh)
-This file allows the user to convert text to morse using an interface. Once executed the script, write the desired text and press enter to convert it. The converted text is copied to the clipboad usign the xclip command.
+Este archivo permite al usuario convertir texto a morse haciendo uso de una interfaz. Una vez ejecutado el script, introduce el texto y presiona enter para convertirlo. El texto en morse es copiado a el portapapeles haciendo uso del commando xclip.
 
-In order to exit, just type "exit" or press Ctrl+C.
+Para salir, escribe "exit" o presiona Ctrl+C.
 
-Example:
+Ejemplo:
 
         $ ./textToMorseApp.sh
 
@@ -22,15 +22,15 @@ Example:
         (Copied to the clipboard)
 
 ### · Script [ttM.sh](./ttM.sh)
-This file contains a script to convert the input directly, without any aditional input or interface. Once the command is executed, the result will be returned and copied to the clipboard using the command xclip.
+Este archivo contiene un commando para convertir el input dado directamente, sin necesidad de argumentos adicionales o interfaz. Una vez el comando ha sido ejecutado, el resultado será devuelto y copiado al portapapeles usando el comando xclip.
 
     $ ./ttM.sh hello world
 
     Output:
     .... . .-.. .-.. ---   .-- --- .-. .-.. -..
 
-#### Full documentation:
-In order to use the command, all the following inputs are valid:
+#### Documentación:
+Para poder usar el comando, existen múltiples maneras de adjuntar el input:
 - Morse reduced (default)
 
         $ ./ttM.sh hello world
@@ -38,54 +38,53 @@ In order to use the command, all the following inputs are valid:
         Output:
         .... . .-.. .-.. ---   .-- --- .-. .-.. -..
 
-- Real Morse code (using parameter):
+- Real Morse code (con parámetro):
 
         $ ./ttM.sh -r hello world
         
         Output:
         . . . .   .   . - . .   . - . .   - - -       . - -   - - -   . - .   . - . .   - . .
 
-- The input can be inputed using also this syntax:
+- El input puede ser agregado usando esta sintáxis:
 
-        (imagine a file created by:) 
+        (Suponiendo la creación de un archivo:) 
         $ echo "hello world" > input.txt;
 
         $ ./ttM.sh -f input.txt
 
-        or
+        o
 
         $ ./ttM.sh < input.txt
         
-        or 
+        o 
 
         $ cat input.txt | ./ttM.sh
 
         Output
         .... . .-.. .-.. ---   .-- --- .-. .-.. -..
 
-- Using real Morse code:
+- Usando real Morse code:
 
-        (imagine a file created by:) 
+        (Suponiendo la creación de un archivo:) 
         $ echo "hello world" > input.txt;
 
         $ ./ttM.sh -r -f input.txt
 
-        or
+        o
 
         $ ./ttM.sh -r < input.txt
         
-        or 
+        o 
 
         $ cat input.txt | ./ttM.sh -r
 
         Output
         . . . .   .   . - . .   . - . .   - - -       . - -   - - -   . - .   . - . .   - . .
-- If the input is not valid, a message is returned saying it.
+- Si el input no es válido, un mensaje es devuelto avisándolo.
 
-## Considerations:
-- The scripts only allows to convert text following this Regex expresion **'^[a-z 0-9]*$'**. This means that all code not formed with the english characters, numbers or spaces will not be valid.
+## Consideraciones:
+- Estos scripts sólo permiten convertir texto que cumpla esta expresión regular **'^[a-z 0-9]*$'**. Esto significa que todo input no formado por los letras inglesas, números o espacios no será válido.
 
-- In this repository they are avalible two types of Morse code: reduced and real.
-Real Morse code follows the standar logic of morse code, with the spaces between letters and words. However, this type of output tends to become really large prety fast. For this reason, the reduced morse code is implemented; where spaces between characters are deleted and spaces between words are reduced.
+- En este repositorio hay disponibles dos tipos de Código Morse: el real y el reducido. Código Morse real sigue la lógica del morse estandar, con espacios entre letras y palabras. Sin embargo, este tipo de output tiende a ser muy largo de manera rápida. Por esta razón, la versión reducida es implementada por defecto; donde los espacios son reducidos.
 
-- The reduced morse code is the default option when running the scripts. See the documentation to change it to real morse if wanted.
+- El Código Morse reducido es la versión por defecto al ejetutar los scripts. Mirar la documentación para cambiar a el Código Morse real si así lo desea.
