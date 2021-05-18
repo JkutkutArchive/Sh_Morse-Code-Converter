@@ -1,11 +1,24 @@
+#!/bin/bash
+
+#colors:
+NC='\033[0m'; # No Color
+RED='\033[0;31m';
+GREEN='\033[0;32m';
+LRED='\033[1;31m';
+LGREEN='\033[1;32m';
+YELLOW='\033[1;33m';
+LBLUE='\033[1;34m';
+
+
+
 tests=(
     "abcdefghijklmnopkrstuvwxyz 0123456789"
-    "-r hola"
+    "-r hey there"
 );
 
 results=(
     '.- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. -.- .-. ... - ..- ...- .-- -..- -.-- --..   ----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----.'
-    "hola"
+    ". . . .   .   - . - -       -   . . . .   .   . - .   ."
 );
 
 
@@ -14,9 +27,6 @@ echo "Starting test";
 
 i=0;
 while [[ $i < ${#tests[@]} ]]; do
-    # echo ${i};
-    # echo "${tests[$i]}";
-    # echo ${#tests[@]};
     printf "Testing $i:\n    ./ttM.sh ${tests[$i]}\n";
 
     ( . ./ttM.sh ${tests[$i]}) > outputTemp.txt;
