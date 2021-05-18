@@ -70,3 +70,4 @@ In order to use the command, all the following inputs are valid:
 
         Output
         . . . .   .   . - . .   . - . .   - - -       . - -   - - -   . - .   . - . .   - . .
+- If the input is not valid, a message is returned saying it.
