@@ -6,7 +6,7 @@ RED='\033[0;31m';
 
 declare -A conversor;
 if [[ $1 == "-r" ]]; then # if real morse selected
-    correctMode=2;
+    nextInput=2;
     spacer="   ";
     conversor[a]=". -";
     conversor[b]="- . . .";
@@ -46,7 +46,7 @@ if [[ $1 == "-r" ]]; then # if real morse selected
     conversor[9]="- - - - .";
     conversor[ ]=" ";
 else # If reduced morse selected (DEFAULT)
-    correctMode=1;
+    nextInput=1;
     spacer=" ";
     conversor[a]=".-";
     conversor[b]="-...";
@@ -89,20 +89,20 @@ fi
 
 
 
-if [[ ${@:$correctMode} != "" ]]; then
-    posibleFileFlagIndex=$((correctMode + 1));
-    if [[ ${!posibleFileFlagIndex} == "-f" ]]; then # if -f flag found
-        textToConvert=$(cat ${!$(($correctMode + 2))}); # The text to convert is the content of the file
+if [[ ${@:$nextInput} != "" ]]; then
+    if [[ ${!nextInput} == "-f" ]]; then # if -f flag found
+        textToConvert=$(cat ${@:$(($nextInput + 1))}); # The text to convert is the content of the file
     else
-        textToConvert=${@:$correctMode}; # Arguments are the arguments
+        textToConvert=${@:$nextInput}; # Arguments are the arguments
     fi
 else # If no arguments with the text
-    textToConvert=$(cat); # Try by getting the text from the pipe
+    textToConvert=$(cat); # Try by getting the text from the pipe or "< input"
 fi
 # If here, the inputed text is stored on textToConvert
 
 reEx='^[a-z 0-9]*$';
 
+# echo $textToConvert;
 if [[ ! "$textToConvert" =~ $reEx ]]; then # If text not valid
     printf "${RED}Invalid input.\nIt must be a combination of english characters with numbers and spaces.${NC}\n";
     exit 1;
@@ -114,3 +114,4 @@ done
 msg="${msg:${#spacer}:((${#msg} - 1))}"; # Remove first space(s)
 echo "$msg"; # Return msg
 printf "$msg" | xclip -i -selection clipboard; # Copy the msg to the clipboard
+# exit;
